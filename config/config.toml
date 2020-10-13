@@ -1,3 +1,5 @@
+limit = 10
+
 # HTTP Server配置
 [server]
     # 端口号
@@ -20,25 +22,22 @@
 [viewer]
     Path        = "./template"
     DefaultFile = "index.html"
-    Delimiters  =  ["${", "}"]
+    #Delimiters  =  ["${", "}"]
+    Delimiters  =  ["{{", "}}"]
 
 # 数据库连接
 [database]
-    link  = "mysql:root:12345678@tcp(127.0.0.1:3306)/mofan-blog"
-    debug = true
-    # 数据库日志对象配置
-    [database.logger]
-        Path   = "./logs/sql"
-        Level  = "all"
-        Stdout = true
+    [[database.default]]
+        link = "mysql:mofan-blog:itmNryLTRFWCPyrR@tcp(172.17.114.172:3306)/mofan-blog"
+        debug = true
+        # 数据库日志对象配置
+        [database.logger]
+            Path   = "./logs/sql"
+            Level  = "all"
+            Stdout = true
 
-# swagger api页面查看账号密码
-[swagger]
-    user        = "123"
-    pass        = "123"
-    schemes     = ["http"]
-    version     = "1.0"
-    title       = "示例服务API"
-    description = """
-`GoFrame`基础开发框架示例服务API接口文档。
-    """
+# Redis 配置
+[redis]
+  default = "127.0.0.1:16379,0"
+  cache   = "127.0.0.1:16379,1"
+

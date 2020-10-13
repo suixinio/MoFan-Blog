@@ -1,6 +1,8 @@
 package home
 
 import (
+	"mofan-blog/app/service/home"
+
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 	"github.com/gogf/gf/os/glog"
@@ -17,7 +19,14 @@ func Welcome(r *ghttp.Request) {
 
 //Index path:/index
 func Index(r *ghttp.Request) {
-	err := r.Response.WriteTpl("home/index.html", g.Map{})
+
+	limit := g.Config().GetInt("limit")
+
+	page := 1
+
+	document_list := home.List(limit, page)
+
+	err := r.Response.WriteTpl("home/index.html", g.Map{"list": document_list})
 
 	if err != nil {
 		glog.Error(err)
