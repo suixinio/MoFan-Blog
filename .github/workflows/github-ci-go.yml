@@ -37,10 +37,11 @@ jobs:
         uses: garygrossgarten/github-action-scp@release
         with:
           local: output/linux/
-          remote: /www/wwwroot/blog.suixin.io/MoFan-Blog/
+          remote: ${{ secrets.REMOTE_PATH }}
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.PASSWORD }}
+          concurrency: 8
 
       - name: Restart server
         uses: appleboy/ssh-action@master
@@ -50,6 +51,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /www/wwwroot/blog.suixin.io/MoFan-Blog/
+            cd ${{ secrets.REMOTE_PATH }}
+            mkdir test
             chmod +x MoFan
             ./MoFan
