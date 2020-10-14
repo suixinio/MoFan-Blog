@@ -21,6 +21,7 @@ type Entity struct {
     Markdown     string      `orm:"markdown"      json:"markdown"`      // 内容               
     Release      string      `orm:"release"       json:"release"`       // 发布内容           
     UserId       uint64      `orm:"user_id"       json:"user_id"`       // 作者               
+    Abstract     string      `orm:"abstract"      json:"abstract"`      // 摘要               
 }
 
 // OmitEmpty sets OPTION_OMITEMPTY option for the model, which automatically filers

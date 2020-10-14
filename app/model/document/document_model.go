@@ -34,6 +34,7 @@ var (
 		Markdown     string // 内容
 		Release      string // 发布内容
 		UserId       string // 作者
+		Abstract     string // 摘要
 	}{
 		Id:           "id",
 		CreateTime:   "create_time",
@@ -44,6 +45,7 @@ var (
 		Markdown:     "markdown",
 		Release:      "release",
 		UserId:       "user_id",
+		Abstract:     "abstract",
 	}
 )
 
@@ -215,16 +217,16 @@ func (m *arModel) Data(data ...interface{}) *arModel {
 //
 // The optional parameter <where> is the same as the parameter of Model.Where function,
 // see Model.Where.
-func (m *arModel) All(where ...interface{}) []*Entity {
+func (m *arModel) All(where ...interface{}) ([]*Entity, error) {
 	all, err := m.M.All(where...)
 	if err != nil {
-		return nil
+		return nil, err
 	}
 	var entities []*Entity
 	if err = all.Structs(&entities); err != nil && err != sql.ErrNoRows {
-		return nil
+		return nil, err
 	}
-	return entities
+	return entities, nil
 }
 
 // One retrieves one record from table and returns the result as *Entity.

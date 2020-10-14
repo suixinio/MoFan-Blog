@@ -30,3 +30,12 @@ jobs:
         with:
           name: MoFan-linux-latest
           path: output/linux/MoFan
+
+      - name: Copy folder content recursively to remote
+        uses: garygrossgarten/github-action-scp@release
+        with:
+          local: output/linux/MoFan
+          remote: /www/wwwroot/blog.suixin.io/MoFan-blog
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.PASSWORD }}
