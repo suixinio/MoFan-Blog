@@ -24,6 +24,8 @@ jobs:
       - name: Build
         run: |
           CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o output/linux/MoFan
+          cp -r public output/linux
+          cp -r template output/linux
 
       - name: Upload artifact
         uses: actions/upload-artifact@v1.0.0
@@ -34,8 +36,20 @@ jobs:
       - name: Copy folder content recursively to remote
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: output/linux/MoFan
-          remote: /www/wwwroot/blog.suixin.io/MoFan-blog
+          local: output/linux/
+          remote: /www/wwwroot/blog.suixin.io/MoFan-Blog/
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.PASSWORD }}
+          concurrency: 20
+
+      - name: Restart server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /www/wwwroot/blog.suixin.io/MoFan-Blog/
+            ./MoFan
