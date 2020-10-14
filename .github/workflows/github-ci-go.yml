@@ -41,7 +41,6 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.PASSWORD }}
-          concurrency: 20
 
       - name: Restart server
         uses: appleboy/ssh-action@master
@@ -52,4 +51,5 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /www/wwwroot/blog.suixin.io/MoFan-Blog/
+            chmod +x MoFan
             ./MoFan
