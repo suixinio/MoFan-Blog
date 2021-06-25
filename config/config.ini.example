@@ -1,0 +1,12 @@
+[server]
+# debug 开发模式  ，release 生产模式
+AppMode = debug
+HttpPort = :3001
+
+[database]
+Db = mysql
+DbName = mofanblog
+DbHost = localhost
+DbPort = 3306
+DbUser = mofanblog
+DbPassWord = mofanblog
