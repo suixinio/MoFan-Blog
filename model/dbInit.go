@@ -22,7 +22,7 @@ func InitDB() {
 	)
 
 	// todo gorm v2 需要更改使用参数确定数据库
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {
 		fmt.Println("连接数据库失败：", err)
