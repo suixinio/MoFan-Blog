@@ -34,13 +34,15 @@ func CreateCate(data *Category) int {
 }
 
 // GetCate 查询分类列表
-func GetCate(pageSize, pageNum int) []Category {
+func GetCate(pageSize, pageNum int) ([]Category, int64) {
 	var categories []Category
-	err := db.Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&categories).Error
+	var total int64
+	err := db.Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&categories).Count(&total).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
-		return nil
+		return nil, 0
 	}
-	return categories
+	return categories, total
+	
 }
 
 // EditCate 编辑用户信息
@@ -58,7 +60,7 @@ func EditCate(id int, data *Category) int {
 // DeleteCate 删除用户
 func DeleteCate(id int) int {
 	err := db.Where("id = ?", id).Delete(&Category{}).Error
- 	if err != nil {
+	if err != nil {
 		return errmsg.ERROR
 	}
 	return errmsg.SUCCESS
