@@ -79,3 +79,4 @@ func DeleteUser(c *gin.Context) {
 		"message": errmsg.GetErrMsg(code),
 	})
 }
+
