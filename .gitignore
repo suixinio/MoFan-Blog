@@ -117,5 +117,5 @@ modules.xml
 
 # End of https://www.toptal.com/developers/gitignore/api/go,jetbrains+all
 
-config/config.ini
+/config/config.ini
 /tmp

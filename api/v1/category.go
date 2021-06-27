@@ -24,8 +24,6 @@ func AddCategory(c *gin.Context) {
 	})
 }
 
-// todo 查询分类下的所有文章
-
 // GetCate 查询分类
 func GetCate(c *gin.Context) {
 	pageSize, _ := strconv.Atoi(c.Query("pagesize"))

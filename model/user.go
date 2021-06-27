@@ -33,7 +33,7 @@ func CheckUser(name string) int {
 // CreateUser 新增用户
 func CreateUser(data *User) int {
 	data.Password = ScryptPW(data.Password)
-	err = db.Create(&data).Error
+	err := db.Create(&data).Error
 	if err != nil {
 		return errmsg.ERROR
 	}
@@ -43,7 +43,7 @@ func CreateUser(data *User) int {
 // GetUsers 查询用户列表
 func GetUsers(pageSize, pageNum int) []User {
 	var users []User
-	err = db.Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&users).Error
+	err := db.Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&users).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return nil
 	}
@@ -56,7 +56,7 @@ func EditUser(id int, data *User) int {
 	var maps = make(map[string]interface{})
 	maps["username"] = data.UserName
 	maps["role"] = data.Role
-	err = db.Model(user).Where("id = ?", id).Updates(maps).Error
+	err := db.Model(user).Where("id = ?", id).Updates(maps).Error
 	if err != nil {
 		return errmsg.ERROR
 	}
@@ -65,7 +65,7 @@ func EditUser(id int, data *User) int {
 
 // DeleteUser 删除用户
 func DeleteUser(id int) int {
-	err = db.Where("id = ?", id).Delete(&User{}).Error
+	err := db.Where("id = ?", id).Delete(&User{}).Error
 	if err != nil {
 		return errmsg.ERROR
 	}
