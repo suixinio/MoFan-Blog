@@ -11,22 +11,25 @@ func InitRouter() {
 	gin.SetMode(utils.AppMode)
 	r := gin.Default()
 
-	authvV1 := r.Group("api/v1")
-	authvV1.Use(middleware.JwtToken())
+	authV1 := r.Group("api/v1")
+	authV1.Use(middleware.JwtToken())
 	{
 		// User 模块的路由接口
-		authvV1.PUT("user/:id", v1.EditUser)
-		authvV1.DELETE("user/:id", v1.DeleteUser)
+		authV1.PUT("user/:id", v1.EditUser)
+		authV1.DELETE("user/:id", v1.DeleteUser)
 
 		// 分类模块的路由接口
-		authvV1.POST("category/add", v1.AddCategory)
-		authvV1.PUT("category/:id", v1.EditCate)
-		authvV1.DELETE("category/:id", v1.DeleteCate)
+		authV1.POST("category/add", v1.AddCategory)
+		authV1.PUT("category/:id", v1.EditCate)
+		authV1.DELETE("category/:id", v1.DeleteCate)
 
 		// 文章模块的路由接口
-		authvV1.POST("article/add", v1.AddArticle)
-		authvV1.PUT("article/:id", v1.EditArt)
-		authvV1.DELETE("article/:id", v1.DeleteArt)
+		authV1.POST("article/add", v1.AddArticle)
+		authV1.PUT("article/:id", v1.EditArt)
+		authV1.DELETE("article/:id", v1.DeleteArt)
+
+		// 上传文件
+		authV1.POST("upload/", v1.Upload)
 	}
 	routerV1 := r.Group("api/v1")
 	{
