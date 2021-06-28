@@ -1,29 +1,83 @@
 <template>
   <div class='container'>
     <div class='loginBox'>
-      登录页面
-      <a-form-model class='loginForm'>
-        <a-form-model-item>
-          <a-input></a-input>
+      <a-form-model ref='loginFormRef' :rules='rules' :model='formdata' class='loginForm'>
+        <a-form-model-item prop='username'>
+          <a-input v-model='formdata.username' placeholder='请输入用户名'>
+            <a-icon slot='prefix' type='user' style='color:rgba(0,0,0,.25)' />
+          </a-input>
         </a-form-model-item>
 
-        <a-form-model-item>
-          <a-input></a-input>
+        <a-form-model-item prop='password'>
+          <a-input v-model='formdata.password' placeholder='请输入密码' type='password'>
+            <a-icon slot='prefix' type='lock' style='color:rgba(0,0,0,.25)' />
+          </a-input>
         </a-form-model-item>
 
         <a-form-model-item class='loginBtn'>
-          <a-button type='primary'>登录</a-button>
-          <a-button type='info'>取消</a-button>
+          <a-button type='primary' style='margin:10px' @click='login'>登录</a-button>
+          <a-button type='info' style='margin:10px' @click='resetForm'>取消</a-button>
         </a-form-model-item>
       </a-form-model>
     </div>
-
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Login'
+  data () {
+    return {
+      formdata: {
+        username: '',
+        password: ''
+      },
+      rules: {
+        username: [
+          {
+            required: true,
+            message: '请输入用户名',
+            trigger: 'blur'
+          },
+          {
+            min: 4,
+            max: 12,
+            message: '用户名必须在4到12个字符之间',
+            trigger: 'blur'
+          }
+        ],
+        password: [
+          {
+            required: true,
+            message: '请输入密码',
+            trigger: 'blur'
+          },
+          {
+            min: 4,
+            max: 12,
+            message: '密码必须在6到20个字符之间',
+            trigger: 'blur'
+          }
+        ]
+      }
+    }
+  },
+  methods: {
+    resetForm () {
+      this.$refs.loginFormRef.resetFields()
+    },
+    login () {
+      this.$refs.loginFormRef.validate(async (valid) => {
+        // console.log(valid)
+        if (!valid) {
+          return this.$message.error('输入非法数据')
+        }
+        const { data: res } = await this.$http.post('login', this.formdata)
+        if (res.status !== 200) return this.$message.error(res.message)
+        window.sessionStorage.setItem('token', res.token)
+        this.$router.push('admin')
+      })
+    }
+  }
 }
 </script>
 
@@ -39,7 +93,7 @@ export default {
   background-color: #fff;
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 70%;
   transform: translate(-50%, -50%);
   border-radius: 9px;
 }

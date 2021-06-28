@@ -5,7 +5,7 @@ import axios from 'axios'
 import './plugin/antui'
 import './assets/css/style.css'
 
-axios.defaults.baseURL = 'http://localhost:300/api/v1'
+axios.defaults.baseURL = 'http://localhost:3001/api/v1'
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
