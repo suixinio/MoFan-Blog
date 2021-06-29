@@ -11,6 +11,7 @@ import (
 	"time"
 )
 
+//todo 数据库错误未处理
 func Logger() gin.HandlerFunc {
 	//filePath := "log/log.log"
 	//scr, err := os.OpenFile(filePath, os.O_RDWR|os.O_CREATE, 0755)
