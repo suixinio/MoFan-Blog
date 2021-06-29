@@ -18,8 +18,7 @@ func InitDB() {
 		utils.DbPassWord,
 		utils.DbHost,
 		utils.DbPort,
-		utils.DbName,
-	)
+		utils.DbName)
 
 	// todo gorm v2 需要更改使用参数确定数据库
 	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})

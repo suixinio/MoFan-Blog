@@ -1,5 +1,7 @@
 <template>
-  <a-button type='danger' @click='loginOut'>退出</a-button>
+  <div>
+    <a-button type='danger' @click='loginOut'>退出</a-button>
+  </div>
 </template>
 
 <script>

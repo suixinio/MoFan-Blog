@@ -40,8 +40,8 @@ export default {
     }
   },
   methods: {
-    goToPage () {
-
+    goToPage (item) {
+      this.$router.push('/admin/' + item.key).catch((err) => err)
     }
   }
 }

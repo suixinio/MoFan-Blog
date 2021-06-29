@@ -1,12 +1,12 @@
 <template>
   <div>
-    <h3>用户信息</h3>
+    <h3>欢迎来到GINBLOG后台管理页面</h3>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Profile.vue'
+  name: 'Index'
 }
 </script>
 

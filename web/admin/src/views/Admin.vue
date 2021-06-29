@@ -2,14 +2,15 @@
   <a-layout class='container'>
     <Nav></Nav>
     <a-layout>
-
       <a-layout-header class='headerBtn'>
         <Header></Header>
       </a-layout-header>
 
-      <a-layout-content>Content</a-layout-content>
+      <a-layout-content>
+        <router-view :key='$route.fullPath'></router-view>
+      </a-layout-content>
 
-      <a-layout-footer>
+      <a-layout-footer class='admin-footer'>
         <Footer></Footer>
       </a-layout-footer>
 
@@ -40,5 +41,9 @@ export default {
   justify-content: flex-end;
   align-items: center;
 
+}
+
+.admin-footer {
+  padding: 0;
 }
 </style>
