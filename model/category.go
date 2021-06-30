@@ -33,16 +33,22 @@ func CreateCate(data *Category) int {
 	return errmsg.SUCCESS
 }
 
+// GetCateInfo 查询单个分类信息
+func GetCateInfo(id int) (Category, int) {
+	var cate Category
+	db.Where("id = ?", id).First(&cate)
+	return cate, errmsg.SUCCESS
+}
+
 // GetCate 查询分类列表
 func GetCate(pageSize, pageNum int) ([]Category, int64) {
 	var categories []Category
 	var total int64
-	err := db.Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&categories).Count(&total).Error
+	err := db.Model(&Category{}).Find(&categories).Count(&total).Limit(pageSize).Offset((pageNum - 1) * pageSize).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return nil, 0
 	}
 	return categories, total
-	
 }
 
 // EditCate 编辑用户信息

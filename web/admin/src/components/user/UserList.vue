@@ -23,8 +23,9 @@
         <span slot='role' slot-scope='role'>{{ role == 1 ? '管理员' : '订阅者' }}</span>
         <template slot='action' slot-scope='data'>
           <div class='actionSlot'>
-            <a-button type='primary' style='margin-right: 15px' @click='editUser(data.ID)'>编辑</a-button>
-            <a-button type='danger' @click='deleteUser(data.ID)'>删除</a-button>
+            <a-button type='primary' icon='edit' size='small' style='margin-right: 15px' @click='editUser(data.ID)'>编辑
+            </a-button>
+            <a-button type='danger' icon='delete' size='small' @click='deleteUser(data.ID)'>删除</a-button>
           </div>
         </template>
       </a-table>
@@ -334,7 +335,8 @@ export default {
         if (res.status !== 200) return this.$message.error(res.message)
         this.addUserVisible = false
         this.$message.success('添加用户成功')
-        this.getUserList()
+        this.$refs.addUserRef.resetFields()
+        await this.getUserList()
       })
     },
     addUserCancel () {
@@ -362,7 +364,8 @@ export default {
         if (res.status !== 200) return this.$message.error(res.message)
         this.editUserVisible = false
         this.$message.success('更新用户成功')
-        this.getUserList()
+        this.$refs.editUserRef.resetFields()
+        await this.getUserList()
       })
     },
     editUserCancel () {

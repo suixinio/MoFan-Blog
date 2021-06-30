@@ -9,7 +9,7 @@ import (
 	"strconv"
 )
 
-var code int
+//var code int
 
 // UserExist 查询用户是否存在
 func UserExist(c *gin.Context) {
@@ -20,6 +20,7 @@ func UserExist(c *gin.Context) {
 func AddUser(c *gin.Context) {
 	var data model.User
 	var msg string
+	var code int
 	_ = c.ShouldBindJSON(&data)
 	msg, code = validator.Validate(&data)
 	if code != errmsg.SUCCESS {
@@ -60,6 +61,8 @@ func GetUsers(c *gin.Context) {
 	pageSize, _ := strconv.Atoi(c.Query("pagesize"))
 	pageNum, _ := strconv.Atoi(c.Query("pagenum"))
 	username := c.Query("username")
+	var code int
+
 	if pageSize == 0 {
 		pageSize = -1
 	}
@@ -81,6 +84,7 @@ func EditUser(c *gin.Context) {
 	var data model.User
 	id, _ := strconv.Atoi(c.Param("id"))
 	_ = c.ShouldBindJSON(&data)
+	var code int
 
 	code = model.CheckUpUser(id, data.UserName)
 	if code == errmsg.SUCCESS {
@@ -98,6 +102,8 @@ func EditUser(c *gin.Context) {
 // 删除用户
 func DeleteUser(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
+	var code int
+
 	code = model.DeleteUser(id)
 	c.JSON(http.StatusOK, gin.H{
 		"status":  code,

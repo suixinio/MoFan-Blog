@@ -32,6 +32,11 @@ const routes = [
         component: AddArt
       },
       {
+        path: 'addart/:id',
+        component: AddArt,
+        props: true
+      },
+      {
         path: 'artlist',
         component: ArtList
       },
