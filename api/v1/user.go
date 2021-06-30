@@ -42,7 +42,18 @@ func AddUser(c *gin.Context) {
 	})
 }
 
-// 查询单个用户
+// GetUserInfo 查询单个用户
+func GetUserInfo(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+	data, code := model.GetUser(id)
+	c.JSON(http.StatusOK, gin.H{
+		"status":  code,
+		"data":    data,
+		"total":   1,
+		"message": errmsg.GetErrMsg(code),
+	})
+
+}
 
 // GetUsers 查询用户列表
 func GetUsers(c *gin.Context) {
@@ -65,12 +76,13 @@ func GetUsers(c *gin.Context) {
 	})
 }
 
-// 编辑用户
+// EditUser 编辑用户
 func EditUser(c *gin.Context) {
 	var data model.User
 	id, _ := strconv.Atoi(c.Param("id"))
 	_ = c.ShouldBindJSON(&data)
-	code = model.CheckUser(data.UserName)
+
+	code = model.CheckUpUser(id, data.UserName)
 	if code == errmsg.SUCCESS {
 		model.EditUser(id, &data)
 	}

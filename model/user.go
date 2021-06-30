@@ -30,6 +30,19 @@ func CheckUser(name string) int {
 	return errmsg.SUCCESS
 }
 
+// CheckUpUser 查询用户是否存在
+func CheckUpUser(id int, name string) int {
+	var user User
+	db.Select("id,username").Where("username = ?", name).First(&user)
+	if user.ID == uint(id) {
+		return errmsg.SUCCESS
+	}
+	if user.ID > 0 {
+		return errmsg.ERROR_USERNAME_USED
+	}
+	return errmsg.SUCCESS
+}
+
 // CreateUser 新增用户
 func CreateUser(data *User) int {
 	data.Password = ScryptPW(data.Password)
@@ -40,6 +53,15 @@ func CreateUser(data *User) int {
 	return errmsg.SUCCESS
 }
 
+func GetUser(id int) (User, int) {
+	var user User
+	err := db.Model(&User{}).Select("id,username,role").Where("ID = ?", id).First(&user).Error
+	if err != nil {
+		return user, errmsg.ERROR
+	}
+	return user, errmsg.SUCCESS
+}
+
 // GetUsers 查询用户列表
 func GetUsers(username string, pageSize, pageNum int) ([]User, int64) {
 	//var user User
@@ -48,14 +70,15 @@ func GetUsers(username string, pageSize, pageNum int) ([]User, int64) {
 	var err error
 
 	if username == "" {
-		err = db.Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&users).Error
+		err = db.Model(&User{}).Select("id,username,role").Count(&total).Find(&users).Limit(pageSize).Offset((pageNum - 1) * pageSize).Error
+		return users, total
 	}
-	err = db.Where("username LIKE ?", username+"%").Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&users).Error
+	err = db.Model(&User{}).Select("id,username,role").Where("username LIKE ?", username+"%").Find(&users).Count(&total).Limit(pageSize).Offset((pageNum - 1) * pageSize).Error
 
 	if err != nil {
 		return nil, 0
 	}
-	err = db.Model(&users).Count(&total).Error
+	//err = db.Model(&users).Count(&total).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return nil, 0
 	}
