@@ -36,6 +36,7 @@ excluded_paths:
   - log
   - tmp
   - web
+  - static
 
 # main package path, can also be a single file, multiple files separated by commas
 build_pkg: ""
