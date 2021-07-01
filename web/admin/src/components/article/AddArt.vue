@@ -171,6 +171,7 @@ export default {
     // 提交或者更新文章
     artOk (id) {
       this.$refs.artInfoRef.validate(async (valid) => {
+        if (!valid) return this.$message.error('参数不符合要求，请重新输入')
         if (id === 0) {
           const { data: res } = await this.$http.post('article/add', this.artInfo)
           if (res.status !== 200) {

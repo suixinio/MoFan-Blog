@@ -40,6 +40,9 @@ func InitRouter() {
 
 		// 上传文件
 		authV1.POST("upload", v1.Upload)
+
+		// 更新个人设置
+		authV1.PUT("profile/:id", v1.UpdateProfile)
 	}
 	routerV1 := r.Group("api/v1")
 	{
@@ -54,10 +57,14 @@ func InitRouter() {
 		// 分类模块的路由接口
 		routerV1.GET("category/:id", v1.GetCateInfo)
 		routerV1.GET("category", v1.GetCate)
+
 		// 文章模块的路由接口
 		routerV1.GET("article", v1.GetArt)
 		routerV1.GET("article/list/:id", v1.GetCateArt)
 		routerV1.GET("article/:id", v1.GetArtInfo)
+
+		// 获取用户用户信息
+		routerV1.GET("profile/:id", v1.GetProfile)
 	}
 
 	r.Run(utils.HttpPort)
