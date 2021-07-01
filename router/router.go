@@ -12,6 +12,7 @@ func InitRouter() {
 	r := gin.New()
 	r.Use(middleware.Logger())
 	r.Use(gin.Recovery())
+	r.Use(middleware.Cors())
 
 	authV1 := r.Group("api/v1")
 	authV1.Use(middleware.JwtToken())
@@ -31,7 +32,7 @@ func InitRouter() {
 		authV1.DELETE("article/:id", v1.DeleteArt)
 
 		// 上传文件
-		authV1.POST("upload/", v1.Upload)
+		authV1.POST("upload", v1.Upload)
 	}
 	routerV1 := r.Group("api/v1")
 	{
@@ -41,8 +42,10 @@ func InitRouter() {
 		// User 模块的路由接口
 		routerV1.POST("user/add", v1.AddUser)
 		routerV1.GET("users", v1.GetUsers)
+		routerV1.GET("user/:id", v1.GetUserInfo)
 
 		// 分类模块的路由接口
+		routerV1.GET("category/:id", v1.GetCateInfo)
 		routerV1.GET("category", v1.GetCate)
 		// 文章模块的路由接口
 		routerV1.GET("article", v1.GetArt)

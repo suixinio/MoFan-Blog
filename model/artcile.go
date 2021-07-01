@@ -29,14 +29,15 @@ func CreateArt(data *Article) int {
 }
 
 // GetCateArt 查询分类下的所有文章
-func GetCateArt(id, pageSize, pageNum int) ([]Article, int) {
+func GetCateArt(id, pageSize, pageNum int) ([]Article, int, int64) {
 	var cateArtList []Article
+	var total int64
 	// todo 软删除的category存在一定的问题
-	err := db.Preload("Category").Limit(pageSize).Offset((pageNum-1)*pageSize).Where("cid = ?", id).Find(&cateArtList).Error
+	err := db.Preload("Category").Limit(pageSize).Offset((pageNum-1)*pageSize).Where("cid = ?", id).Find(&cateArtList).Count(&total).Error
 	if err != nil {
-		return nil, errmsg.ERROR_CATE_NOT_EXIST
+		return nil, errmsg.ERROR_CATE_NOT_EXIST, 0
 	}
-	return cateArtList, errmsg.SUCCESS
+	return cateArtList, errmsg.SUCCESS, total
 }
 
 // GetArtInfo 查询单个文章信息
@@ -50,13 +51,21 @@ func GetArtInfo(id int) (Article, int) {
 }
 
 // GetArt 查询文章列表
-func GetArt(pageSize, pageNum int) ([]Article, int) {
+func GetArt(title string, pageSize, pageNum int) ([]Article, int, int64) {
 	var articles []Article
-	err := db.Preload("Category").Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&articles).Error
-	if err != nil && err != gorm.ErrRecordNotFound {
-		return nil, errmsg.ERROR
+	var total int64
+	if title == "" {
+		err := db.Preload("Category").Order("Updated_At DESC").Find(&articles).Count(&total).Limit(pageSize).Offset((pageNum - 1) * pageSize).Error
+		if err != nil && err != gorm.ErrRecordNotFound {
+			return nil, errmsg.ERROR, 0
+		}
+		return articles, errmsg.SUCCESS, total
 	}
-	return articles, errmsg.SUCCESS
+	err := db.Preload("Category").Order("Updated_At DESC").Model(&Article{}).Where("title LIKE ?", title+"%").Find(&articles).Count(&total).Limit(pageSize).Offset((pageNum - 1) * pageSize).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return nil, errmsg.ERROR, 0
+	}
+	return articles, errmsg.SUCCESS, total
 }
 
 // EditArt 编辑用户信息
