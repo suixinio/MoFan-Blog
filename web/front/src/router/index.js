@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import ArticleList from '../components/ArticleList'
+import Details from '../components/Details'
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,12 @@ const routes = [
         path: '/',
         component: ArticleList,
         meta: { title: '欢迎来到MoFanBlog' }
+      },
+      {
+        path: '/detail/:id',
+        component: Details,
+        meta: { title: '文章详情' },
+        props: true
       }
     ]
   }
