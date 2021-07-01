@@ -1000,11 +1000,6 @@
   resolved "https://registry.npm.taobao.org/@soda/get-current-script/download/@soda/get-current-script-1.0.2.tgz#a53515db25d8038374381b73af20bb4f2e508d87"
   integrity sha1-pTUV2yXYA4N0OBtzryC7Ty5QjYc=
 
-"@tinymce/tinymce-vue@^4.0.3":
-  version "4.0.3"
-  resolved "https://registry.nlark.com/@tinymce/tinymce-vue/download/@tinymce/tinymce-vue-4.0.3.tgz#69429f6f8f88762fb3b02ee72e42135f0272a48c"
-  integrity sha1-aUKfb4+Idi+zsC7nLkITXwJypIw=
-
 "@types/body-parser@*":
   version "1.19.0"
   resolved "https://registry.nlark.com/@types/body-parser/download/@types/body-parser-1.19.0.tgz#0685b3c47eb3006ffed117cdd55164b61f80538f"

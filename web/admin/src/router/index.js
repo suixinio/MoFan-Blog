@@ -19,7 +19,7 @@ const routes = [
     component: Login
   },
   {
-    path: '/admin',
+    path: '/',
     name: 'admin',
     component: Admin,
     children: [

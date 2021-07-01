@@ -8,7 +8,7 @@
                           allowClear />
         </a-col>
         <a-col :span='4'>
-          <a-button type='primary' @click='$router.push(`/admin/addart/`)'>新增</a-button>
+          <a-button type='primary' @click='$router.push(`addart/`)'>新增</a-button>
         </a-col>
         <a-col :span='3'>
           <a-select placeholder='请选择分类' style='width: 200px' @change='cateChange'>
@@ -37,7 +37,7 @@
         <template slot='action' slot-scope='data'>
           <div class='actionSlot'>
             <a-button type='primary' icon='edit' size='small' style='margin-right: 15px'
-                      @click='$router.push(`/admin/addart/${data.ID}`)'>编辑
+                      @click='$router.push(`addart/${data.ID}`)'>编辑
             </a-button>
             <a-button type='danger' icon='delete' size='small' @click='deleteArt(data.ID)'>删除</a-button>
           </div>
