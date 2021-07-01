@@ -27,7 +27,7 @@ func InitDB() {
 		fmt.Println("连接数据库失败：", err)
 	}
 
-	db.AutoMigrate(&User{}, &Category{}, &Article{})
+	db.AutoMigrate(&User{}, &Category{}, &Article{}, &Profile{})
 
 	sqlDB, err := db.DB()
 	if err != nil {

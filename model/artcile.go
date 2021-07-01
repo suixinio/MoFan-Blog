@@ -55,13 +55,13 @@ func GetArt(title string, pageSize, pageNum int) ([]Article, int, int64) {
 	var articles []Article
 	var total int64
 	if title == "" {
-		err := db.Preload("Category").Order("Updated_At DESC").Find(&articles).Count(&total).Limit(pageSize).Offset((pageNum - 1) * pageSize).Error
+		err := db.Model(&Article{}).Preload("Category").Order("Updated_At DESC").Count(&total).Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&articles).Error
 		if err != nil && err != gorm.ErrRecordNotFound {
 			return nil, errmsg.ERROR, 0
 		}
 		return articles, errmsg.SUCCESS, total
 	}
-	err := db.Preload("Category").Order("Updated_At DESC").Model(&Article{}).Where("title LIKE ?", title+"%").Find(&articles).Count(&total).Limit(pageSize).Offset((pageNum - 1) * pageSize).Error
+	err := db.Model(&Article{}).Preload("Category").Order("Updated_At DESC").Model(&Article{}).Where("title LIKE ?", title+"%").Count(&total).Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&articles).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return nil, errmsg.ERROR, 0
 	}
