@@ -18,7 +18,7 @@ const routes = [
         meta: { title: '欢迎来到MoFanBlog' }
       },
       {
-        path: '/detail/:id',
+        path: '/article/detail/:id',
         component: Details,
         meta: { title: '文章详情' },
         props: true
