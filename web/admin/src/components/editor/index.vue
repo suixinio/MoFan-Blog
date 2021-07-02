@@ -1,39 +1,36 @@
 <template>
   <div>
-    <!--    <Editor :init='init' v-model='content'></Editor>-->
-
     <div id='vditor' class='vditor' />
   </div>
 </template>
 
 <script>
-// import Editor from '@tinymce/tinymce-vue'
-// eslint-disable-next-line no-unused-vars
-// import tinymce from './tinymce.min'
-// import './icons/default/icons.min'
-// import './themes/silver/theme.min'
-// import './langs/zh_CN'
 
 import Vditor from 'vditor'
 import 'vditor/dist/index.css'
 
 export default {
-  // components: { Editor },
 
   props: {
     value: {
       type: String,
       default: ''
+    },
+    vdContent: {
+      type: String,
+      default: ''
     }
+
   },
   data () {
     return {
-      contentEditor: ''
+      contentEditor: '',
+      content: ''
     }
   },
   created () {
-    this.setDefaultText()
-    console.log(this.value)
+    // this.cleanText()
+    // this.setDefaultText()
   },
   mounted () {
     const that = this
@@ -41,38 +38,31 @@ export default {
       typewriterMode: true,
       after () {
         console.log('渲染完成')
-        that.contentEditor.setValue(that.value)
       },
       ctrlEnter (md) {
         console.log('用户按下了 Ctrl+Enter，Markdown 内容为：\n' + md)
         that.content = md
-        that.$emit('input', md)
       },
       input (md) {
         console.log('用户进行了输入，Markdown 内容为：\n' + md)
         that.content = md
-        that.$emit('input', md)
       },
       blur (md) {
         console.log('用户离开了编辑器，Markdown 内容为：\n' + md)
         that.content = md
-        that.$emit('input', md)
       },
       select (md) {
         console.log('用户选中了一段文字，内容为：\n' + md)
-        // this.content = md
       },
       focus (md) {
         console.log('用户选中了编辑器，Markdown 内容为：\n' + md)
         that.content = md
-        that.$emit('input', md)
       },
       esc (md) {
         console.log('用户按下了 ESC，Markdown 内容为：\n' + md)
         that.content = md
-        that.$emit('input', md)
       },
-      width: this.isMobile ? '100%' : '80%',
+      // width: this.isMobile ? '100%' : '80%',
       height: '0',
       tab: '\t',
       counter: '999999',
@@ -84,25 +74,25 @@ export default {
       outline: true
     }
     this.contentEditor = new Vditor('vditor', options)
-    // this.contentEditor.setValue('123123')
-    this.contentEditor.clearCache()
   },
   methods: {
-    update (str) {
-      this.contentEditor.setValue('123123')
-    },
-    setDefaultText () {
-      const savedMdContent = localStorage.getItem('vditorvditor') || ''
-      if (!savedMdContent.trim()) {
-        localStorage.setItem('vditorvditor', '12312312313')
-      }
-    }
+    // cleanText () {
+    //   localStorage.setItem('vditorvditor', '')
+    // },
+    // saveText (value) {
+    //   localStorage.setItem('vditorvditor', value)
+    // }
   },
   watch: {
-    value (newV) {
-      console.log('value' + newV)
+    vdContent (newV) {
+      console.log('vdContent' + newV)
+      // this.saveText(newV)
       this.content = newV
-      this.contentEditor.setValue(newV)
+      // this.contentEditor.setValue(newV)
+    },
+    value (newV) {
+      console.log('value:', newV)
+      // this.setText(newV)
     },
     content (newV) {
       console.log('content:' + newV)
@@ -113,5 +103,14 @@ export default {
 </script>
 
 <style scoped>
-@import url('./skins/ui/oxide/skin.min.css');
+.vditor {
+  /*position: absolute;*/
+  /*top: @header-height;*/
+  /*max-width: @max-body-width;*/
+  /*width: 80%;*/
+  /*height: calc(100vh - 100px);*/
+  /*margin: 20px auto;*/
+  /*text-align: left;*/
+  height: 70vh ;
+}
 </style>
