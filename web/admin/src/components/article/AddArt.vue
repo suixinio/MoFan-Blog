@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-card :loading='isLoading'>
+    <a-card>
       <h3>{{ id ? '编辑文章' : '新增文章' }}</h3>
       <a-form-model :model='artInfo' ref='artInfoRef' :rules='artInfoRules' :hide-required-mark='true'>
 
@@ -46,7 +46,7 @@
         </a-form-model-item>
 
         <a-form-model-item label='文章内容' prop='content'>
-          <Editor v-model='artInfo.content' :vdContent='artInfo.vdContent'></Editor>
+          <Editor v-model='artInfo.content'></Editor>
         </a-form-model-item>
 
         <a-form-model-item>
@@ -72,7 +72,6 @@ export default {
   props: ['id'],
   data () {
     return {
-      isLoading: true,
       catelist: [],
       artInfo: {
         id: 0,
@@ -80,7 +79,6 @@ export default {
         cid: undefined,
         desc: '',
         content: '',
-        vdContent: '',
         img: ''
       },
       upUrl: Url + 'upload',
@@ -126,8 +124,6 @@ export default {
     }
     if (this.id) {
       this.getArtInfo(this.id)
-    } else {
-      this.isLoading = false
     }
   },
   methods: {
@@ -143,10 +139,6 @@ export default {
       }
       this.artInfo = res.data
       this.artInfo.id = res.data.ID
-      this.artInfo.vdContent = res.data.content
-      // todo 这个地方传递有一定问题
-      localStorage.setItem('vditorvditor', res.data.content)
-      this.isLoading = false
     },
     async getCateList () {
       const { data: res } = await this.$http.get('category')
