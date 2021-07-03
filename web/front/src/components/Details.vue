@@ -47,9 +47,9 @@ export default {
       const previewElement = document.getElementById('preview')
 
       await Vditor.preview(previewElement, this.artInfo.content, {
-        speech: {
-          enable: true
-        },
+        // speech: {
+        //   enable: true
+        // },
         anchor: 1,
         after () {
           if (window.innerWidth <= 768) {

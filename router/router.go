@@ -1,42 +1,19 @@
 package router
 
 import (
-	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-gonic/gin"
 	"mofan-blog/api/v1"
 	"mofan-blog/middleware"
 	"mofan-blog/utils"
 )
 
-func createMyRender() multitemplate.Renderer {
-	r := multitemplate.NewRenderer()
-	r.AddFromFiles("admin", "web/admin/dist/index.html")
-	r.AddFromFiles("front", "web/front/dist/index.html")
-
-	return r
-}
-
 func InitRouter() {
 	gin.SetMode(utils.AppMode)
 	r := gin.New()
 
-	r.HTMLRender = createMyRender()
-
 	r.Use(middleware.Logger())
 	r.Use(gin.Recovery())
 	r.Use(middleware.Cors())
-
-	r.Static("/static", "./web/front/dist/static")
-	r.Static("/admin", "./web/admin/dist")
-	//r.StaticFile("/favicon.ico", "/web/front/dist/favicon.ico")
-
-	r.GET("/", func(c *gin.Context) {
-		c.HTML(200, "front", nil)
-	})
-
-	r.GET("/admin", func(c *gin.Context) {
-		c.HTML(200, "admin", nil)
-	})
 
 	authV1 := r.Group("api/v1")
 	authV1.Use(middleware.JwtToken())
