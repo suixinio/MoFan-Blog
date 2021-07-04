@@ -4,10 +4,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"mofan-blog/api/v1"
 	"mofan-blog/middleware"
+	"mofan-blog/service/upload"
 	"mofan-blog/utils"
 )
 
 func InitRouter() {
+	upload.InitUpload()
 	gin.SetMode(utils.AppMode)
 	r := gin.New()
 
