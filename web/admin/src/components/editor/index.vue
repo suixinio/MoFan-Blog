@@ -8,6 +8,7 @@
 
 import Vditor from 'vditor'
 import 'vditor/dist/index.css'
+import { Url } from '../../plugin/http'
 
 export default {
 
@@ -31,6 +32,9 @@ export default {
   created () {
     // this.cleanText()
     // this.setDefaultText()
+    this.headers = {
+      Authorization: `Bearer ${window.sessionStorage.getItem('token')}`
+    }
   },
   mounted () {
     const that = this
@@ -62,6 +66,56 @@ export default {
         console.log('用户按下了 ESC，Markdown 内容为：\n' + md)
         that.content = md
       },
+      cache: {
+        // enable: false
+      },
+      upload: {
+        accept: 'image/*,.mp3, .wav, .rar',
+        headers: { Authorization: `Bearer ${window.sessionStorage.getItem('token')}` },
+        url: Url + 'upload',
+        fieldName: 'file',
+        multiple: false,
+        // linkToImgUrl: Url + 'upload',
+        // linkToImgCallback: (responseText) => {
+        //   console.log('rerere', responseText)
+        // },
+        success: (editor, msg) => {
+          var json = JSON.parse(msg)
+          console.log(editor, json.url)
+          that.contentEditor.insertValue(`![](${json.url})`)
+        },
+        format: (files, responseText) => {
+          console.log(files, responseText)
+        }
+        // linkToImgUrl: '/api/upload/fetch',
+        // filename (name) {
+        //   return name.replace(/[^(a-zA-Z0-9\u4e00-\u9fa5\.)]/g, '').replace(/[\?\\/:|<>\*\[\]\(\)\$%\{\}@~]/g, '').replace('/\\s/g', '')
+        // }
+      },
+      // upload: {
+      //   max: 5 * 1024 * 1024,
+      //   // linkToImgUrl: 'https://sm.ms/api/upload',
+      //   handler (file) {
+      //     const formData = new FormData()
+      //     for (const i in file) {
+      //       formData.append('smfile', file[i])
+      //     }
+      //     const request = new XMLHttpRequest()
+      //     request.open('POST', 'https://sm.ms/api/upload')
+      //     request.onload = that.onloadCallback
+      //     request.send(formData)
+      //   }
+      // },
+      // upload: {
+      //   url: that.Url + '/upload',
+      //   accept: 'image/*,.mp3, .wav, .rar',
+      //   token: that.base,
+      //   linkToImgUrl: '/api/upload/fetch',
+      //   filename (name) {
+      //     // return name.replace(/[^(a-zA-Z0-9\u4e00-\u9fa5\.)]/g, '').replace(/[\?\\/:|<>\*\[\]\(\)\$%\{\}@~]/g, '').replace('/\\s/g', '')
+      //   }
+      // },
+
       // width: this.isMobile ? '100%' : '80%',
       height: '0',
       tab: '\t',
@@ -111,6 +165,6 @@ export default {
   /*height: calc(100vh - 100px);*/
   /*margin: 20px auto;*/
   /*text-align: left;*/
-  height: 70vh ;
+  height: 70vh;
 }
 </style>

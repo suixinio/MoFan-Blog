@@ -19,6 +19,10 @@ type Gsky struct {
 func (g Gsky) UploadFile(file multipart.File, fileHandler *multipart.FileHeader) (string, int) {
 	//var params map[string]string
 	//params["file"]
+	if fileHandler == nil {
+		fmt.Println("ninininininin")
+	}
+	fmt.Println("filesize:", fileHandler.Size)
 	content, err := UploadGskyFile(utils.GskyServer, map[string]string{}, "file", fileHandler.Filename, file)
 	if err != nil {
 		fmt.Println(err)

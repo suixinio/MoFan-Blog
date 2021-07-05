@@ -74,7 +74,7 @@ export default {
 </script>
 
 <style scoped>
-.content >>> img, span, p {
-  width: 100%;
-}
+/*.content >>> img, span, p {*/
+/*  width: 100%;*/
+/*}*/
 </style>
