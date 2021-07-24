@@ -47,9 +47,9 @@ export default {
       const previewElement = document.getElementById('preview')
 
       await Vditor.preview(previewElement, this.artInfo.content, {
-        speech: {
-          enable: true
-        },
+        // speech: {
+        //   enable: true
+        // },
         anchor: 1,
         after () {
           if (window.innerWidth <= 768) {
@@ -74,7 +74,7 @@ export default {
 </script>
 
 <style scoped>
-.content >>> img, span, p {
-  width: 100%;
-}
+/*.content >>> img, span, p {*/
+/*  width: 100%;*/
+/*}*/
 </style>

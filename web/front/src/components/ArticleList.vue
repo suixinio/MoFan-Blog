@@ -1,6 +1,7 @@
 <template>
   <v-col>
-    <v-card class="ma-3" v-for="item in artList" :key="item.ID" link @click="$router.push(`detail/${item.ID}`)">
+    <v-card class="ma-3" v-for="item in artList" :key="item.ID" link
+            @click="$router.push(`/article/detail/${item.ID}`)">
       <v-row no-gutters>
         <v-col class="d-flex justify-center align-center mx-3" cols="1">
           <v-img :src="item.img" max-width="100" max-height="100"></v-img>

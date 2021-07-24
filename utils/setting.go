@@ -17,10 +17,14 @@ var (
 	DbPassWord string
 	DbName     string
 
+	Plugin      string
 	AccessKey   string
 	SecretKey   string
 	Bucket      string
 	QiniuServer string
+
+	GskyServer string
+	BaseUrl    string
 )
 
 func init() {
@@ -30,7 +34,7 @@ func init() {
 	}
 	LoadServer(file)
 	LoadData(file)
-	LoadQiniu(file)
+	LoadUpload(file)
 }
 
 func LoadServer(file *ini.File) {
@@ -49,9 +53,14 @@ func LoadData(file *ini.File) {
 	DbName = file.Section("database").Key("DbName").MustString("ginblog")
 }
 
-func LoadQiniu(file *ini.File) {
-	AccessKey = file.Section("qiniu").Key("AccessKey").MustString("")
-	SecretKey = file.Section("qiniu").Key("SecretKey").MustString("")
-	Bucket = file.Section("qiniu").Key("Bucket").MustString("")
-	QiniuServer = file.Section("qiniu").Key("QiniuServer").MustString("")
+func LoadUpload(file *ini.File) {
+	Plugin = file.Section("upload").Key("Plugin").MustString("")
+
+	GskyServer = file.Section("upload").Key("GskyServer").MustString("")
+	BaseUrl = file.Section("upload").Key("BaseUrl").MustString("")
+
+	AccessKey = file.Section("upload").Key("AccessKey").MustString("")
+	SecretKey = file.Section("upload").Key("SecretKey").MustString("")
+	Bucket = file.Section("upload").Key("Bucket").MustString("")
+	QiniuServer = file.Section("upload").Key("QiniuServer").MustString("")
 }

@@ -1,4 +1,4 @@
-package model
+package qiniu
 
 import (
 	"context"
@@ -14,8 +14,11 @@ var SecretKey = utils.SecretKey
 var Bucket = utils.Bucket
 var ImgUrl = utils.QiniuServer
 
-func UploadFile(file multipart.File, fileSize int64) (string, int) {
+type QiNiu struct {
+}
 
+func (q QiNiu) UploadFile(file multipart.File, fileHandler *multipart.FileHeader) (string, int) {
+	fileSize := fileHandler.Size
 	putPolicy := storage.PutPolicy{
 		Scope: Bucket,
 	}
